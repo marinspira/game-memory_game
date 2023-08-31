@@ -7,8 +7,8 @@ import ScoreBoard from './objects/ScoreBoard';
 function App() {
   return (
     <div className="App">
-      {ScoreBoard()}
-      {BoardGame()}
+      <ScoreBoard />
+      <BoardGame />
     </div>
   );
 }

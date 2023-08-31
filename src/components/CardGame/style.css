@@ -8,6 +8,8 @@
     background-color: var(--color-blue);
     border: 2px solid var(--color-white);
     cursor: pointer;
+    width: 120px;
+    height: 150px;
 }
 
 .card-game img {

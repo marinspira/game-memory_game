@@ -1,80 +1,85 @@
 import React, { useState, useEffect } from 'react';
-import './styles.css';
-import CardFrontBack from '../../components/CardFrontBack';
+import CardGame from './../../components/CardGame/index';
+import blair1 from '../../assets/blair1.webp'
+import blair2 from '../../assets/blair2.webp'
+import blair3 from '../../assets/blair3.webp'
+import './styles.css'
 
-function BoardGame() {
-    const srcImg = ["blair1", "blair1", "blair2", "blair2", "blair3", "blair3"];
-    const [cardsRandow, setCardsRandow] = useState(shuffleArray(srcImg));
-    const [cardsActive, setCardsActive] = useState([]);
-    const [currentPlayer, setCurrentPlayer] = useState(1);
+const cardsData = [
+    { id: 1, content: <CardGame icon={blair1} />, flipped: false },
+    { id: 1, content: <CardGame icon={blair1} />, flipped: false },
+    { id: 2, content: <CardGame icon={blair2} />, flipped: false },
+    { id: 2, content: <CardGame icon={blair2} />, flipped: false },
+    { id: 3, content: <CardGame icon={blair3} />, flipped: false },
+    { id: 3, content: <CardGame icon={blair3} />, flipped: false },
+];
+
+function MemoryGame() {
+    const [cards, setCards] = useState(cardsData);
+    const [flippedCount, setFlippedCount] = useState(0);
+    const [flippedIndexes, setFlippedIndexes] = useState([]);
 
     useEffect(() => {
-        window.boardGame = {
-            handleClick: handleBoardGameClick
-        };
-    }, []);
-
-    // Embaralha as imagens
-    function shuffleArray(arr) {
-        for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return arr;
-    }
-
-    // Função para comparar as cartas ativas
-    function compareCards() {
-        if (cardsActive.length === 2) {
-            const [card1, card2] = cardsActive;
-            const src1 = getCardSrc(card1);
-            const src2 = getCardSrc(card2);
-            return src1 === src2;
-        }
-        return false;
-    }
-
-    // Função para obter o src da imagem de uma carta
-    function getCardSrc(card) {
-        const cardBack = card.querySelector('.-back');
-        const imgBack = cardBack.querySelector('img');
-        return imgBack.getAttribute('src');
-    }
-
-    // Função para desvirar e ocultar as cartas ativas
-    function flipAndHideCards() {
-        cardsActive.forEach(card => card.classList.remove('-active'));
-        setCardsActive([]);
-    }
-
-    // Manipulador de clique no tabuleiro do jogo
-    function handleBoardGameClick() {
-        const $boardGame = document.querySelector('.board-game');
-        const newCardsActive = Array.from($boardGame.querySelectorAll('.card-front-back.-active'));
-
-        if (newCardsActive.length === 2) {
-            if (compareCards()) {
-                console.log('iguais');
+        if (flippedCount === 2) {
+            const [card1Index, card2Index] = flippedIndexes;
+            if (cards[card1Index].id === cards[card2Index].id) {
+                // Pares correspondentes encontrados, deixe as cartas viradas
+                const updatedCards = cards.map((card, index) => {
+                    if (index === card1Index || index === card2Index) {
+                        return { ...card, flipped: true };
+                    }
+                    return card;
+                });
+                setCards(updatedCards);
             } else {
+                // Pares não correspondentes, vire as cartas de volta após um atraso
                 setTimeout(() => {
-                    flipAndHideCards();
-                    setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
+                    const updatedCards = cards.map((card, index) => {
+                        if (index === card1Index || index === card2Index) {
+                            return { ...card, flipped: false };
+                        }
+                        return card;
+                    });
+                    setCards(updatedCards);
                 }, 1000);
             }
+
+            // Reinicie a contagem de cartas viradas
+            setFlippedCount(0);
+            setFlippedIndexes([]);
         }
+    }, [flippedCount, flippedIndexes, cards]);
 
-        setCardsActive(newCardsActive);
-    }
+    const handleCardClick = (index) => {
+        if (flippedCount < 2 && !cards[index].flipped) {
+            setFlippedCount(flippedCount + 1);
+            setFlippedIndexes([...flippedIndexes, index]);
 
-    const htmlContent = cardsRandow.map((card, index) => (
-        <CardFrontBack key={index} card={card} />
-    ));
+            const updatedCards = cards.map((card, cardIndex) => {
+                if (cardIndex === index) {
+                    return { ...card, flipped: true };
+                }
+                return card;
+            });
+            setCards(updatedCards);
+        }
+    };
 
     return (
-        <section className="board-game" onClick={handleBoardGameClick}>
-            {htmlContent}
-        </section>
+        <div className="memory-game">
+            <div className="board-game">
+                {cards.map((card, index) => (
+                    <div
+                        key={card.id}
+                        className={`card ${card.flipped ? 'flipped' : ''}`}
+                        onClick={() => handleCardClick(index)}
+                    >
+                        {card.flipped ? card.content : <CardGame />}
+                    </div>
+                ))}
+            </div>
+        </div>
     );
-}
+};
 
-export default BoardGame;
+export default MemoryGame;
