@@ -1,0 +1,25 @@
+.player-score {
+    width: 50px;
+    height: 20px;
+    background-color: var(--color-white);
+    border: 2px solid var(--color-rose);
+    box-sizing: border-box;
+    padding: 1px;
+    display: flex;
+    gap: 1px;
+}
+
+.player-score > .pointer {
+    width: 33%;
+    background-color: var(--color-gray);
+    overflow: hidden;
+    text-indent: -9999px;
+}
+
+.player-score[data-points="1"] > .pointer:first-child {
+    background-color: var(--color-green);
+}
+
+.player-score[data-points="2"] > .pointer:nth-child(-n+2) {
+    background-color: var(--color-green);
+}
