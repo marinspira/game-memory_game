@@ -1,13 +1,17 @@
 {
   "files": {
-    "main.css": "/game-memory_game/static/css/main.4cea3332.css",
-    "main.js": "/game-memory_game/static/js/main.2ae3d25c.js",
+    "main.css": "/game-memory_game/static/css/main.b86cb856.css",
+    "main.js": "/game-memory_game/static/js/main.53a17e30.js",
+    "static/media/blair1.webp": "/game-memory_game/static/media/blair1.f4c39b106930fd4a1712.webp",
+    "static/media/blair2.webp": "/game-memory_game/static/media/blair2.ca9a371e13f84f35b528.webp",
+    "static/media/blair3.webp": "/game-memory_game/static/media/blair3.bb4259fba63812f512b2.webp",
+    "static/media/me.webp": "/game-memory_game/static/media/me.d03f0598c59b9b335bbd.webp",
     "index.html": "/game-memory_game/index.html",
-    "main.4cea3332.css.map": "/game-memory_game/static/css/main.4cea3332.css.map",
-    "main.2ae3d25c.js.map": "/game-memory_game/static/js/main.2ae3d25c.js.map"
+    "main.b86cb856.css.map": "/game-memory_game/static/css/main.b86cb856.css.map",
+    "main.53a17e30.js.map": "/game-memory_game/static/js/main.53a17e30.js.map"
   },
   "entrypoints": [
-    "static/css/main.4cea3332.css",
-    "static/js/main.2ae3d25c.js"
+    "static/css/main.b86cb856.css",
+    "static/js/main.53a17e30.js"
   ]
 }
